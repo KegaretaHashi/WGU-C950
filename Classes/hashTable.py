@@ -1,5 +1,5 @@
 class hashtable:
-    def __init__(self, size=10):
+    def __init__(self, size=15):
         self.size = size
         self.table = [[] for _ in range(size)]  # Initialize with empty lists
 
