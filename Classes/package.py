@@ -1,5 +1,5 @@
 class package:
-    def __init__(self, ID, address, city, state, zip_code, deadline, weight, status='Pending'):
+    def __init__(self, ID, address, city, state, zip_code, deadline, weight, status='At The Hub'):
         self.ID = ID
         self.address = address
         self.city = city
@@ -16,3 +16,6 @@ class package:
     
     def update_status(self, status):
         self.status = status
+
+    def get_status(self):
+        return self.status
