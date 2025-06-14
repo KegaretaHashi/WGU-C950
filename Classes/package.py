@@ -8,14 +8,18 @@ class package:
         self.deadline = deadline
         self.weight = weight
         self.status = status
+        self.delivery_time = None
 
     def __str__(self):
         return (f"Package ID: {self.ID}, Address: {self.address}, City: {self.city}, "
                 f"State: {self.state}, Zip Code: {self.zip_code}, Delivery Deadline: {self.deadline}, Weight: {self.weight} kgs, "
-                f"Delivery Status: {self.status}")
+                f"Delivery Status: {self.status}, Delivery Time: {self.delivery_time}")
     
     def update_status(self, status):
         self.status = status
+
+    def update_delivery_time(self, delivery_time):
+        self.delivery_time = delivery_time
 
     def get_status(self):
         return self.status
