@@ -78,7 +78,6 @@ def deliver_packages(truck, start_time):
             break
 
 truck1 = truck.Truck(1, [1, 13, 14, 15, 16, 20, 29, 30, 31, 34, 37, 40])
-<<<<<<< HEAD
 truck2 = truck.Truck(2, [2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12])
 truck3 = truck.Truck(3, [17, 18, 19, 21, 22, 23, 24, 25, 26, 27, 28])
 
@@ -90,15 +89,3 @@ class Main:
     print("Western Governors University Parcel Service (WGUPS)")
     print("Package Delivery Summary:")
     print("Total distance traveled be all trucks:", round((truck1.distance_traveled + truck2.distance_traveled + truck3.distance_traveled), 2))
-=======
-#truck2 = truck.Truck(2, [2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12])
-
-class Main:
-    #package = packagetable.get(1)
-    #print(package.__getattribute__('status'))
-    deliver_packages(truck1, timedelta(hours=8))
-    #print(truck1.current_location)
-    #print(get_distance(translate_address("4001 South 700 East"), translate_address("1488 4800 S")))
-    #print("Main class initialized.")
-    #print(translate_address("380 W 2880 S"))
->>>>>>> 09a493fb96f45ae5b1e542be334cc65230a77789
