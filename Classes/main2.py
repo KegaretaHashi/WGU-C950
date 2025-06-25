@@ -53,6 +53,7 @@ def deliver_packages(truck_obj, start_time):
     for package_id in truck_obj.get_packages():
             package = packagetable.get(package_id)
             package.update_status('In Transit')
+            package.departure_time = truck_obj.current_time
 
     # Loop through packages in truck until all packages are delivered
     while truck_obj.get_packages():
@@ -90,17 +91,32 @@ def deliver_packages(truck_obj, start_time):
             # Break the loop if no undelivered packages are found
             break
 
+
+def status_all_packages(time):
+    for package_id in range(1, 41):
+        package = packagetable.get(package_id)
+        if package:
+            print(f"Package {package.ID} status at {time}: {package.get_time_status(time)}")
+            
+
 # Create and load trucks with packages
-truck1 = truck.Truck(1, [1, 13, 14, 15, 16, 20, 29, 30, 31, 34, 37, 40])
-truck2 = truck.Truck(2, [2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12])
-truck3 = truck.Truck(3, [17, 18, 19, 21, 22, 23, 24, 25, 26, 27, 28])
+truck1 = truck.Truck(1, [14, 15, 19, 13, 16, 20, 1, 29, 30, 31, 34, 37, 40, 35, 39])
+truck2 = truck.Truck(2, [3, 18, 36, 38, 28, 32, 6, 25, 23, 24, 26, 27, 33])
+truck3 = truck.Truck(3, [9, 2, 4, 5, 7, 8, 10, 11, 12, 17 , 21, 22 ])
 
 class Main:
     deliver_packages(truck1, timedelta(hours=8))
-    deliver_packages(truck2, timedelta(hours=9))
-    deliver_packages(truck3, timedelta(hours=10))
+    deliver_packages(truck2, timedelta(hours=9, minutes=5))
+    deliver_packages(truck3, timedelta(hours=10, minutes=20))
 
     print("Western Governors University Parcel Service (WGUPS)")
     print("Package Delivery Summary:")
     print("Total distance traveled be all trucks:", round((truck1.distance_traveled + truck2.distance_traveled + truck3.distance_traveled), 2))
+
+    #status_all_packages(timedelta(hours=8, minutes=55, seconds=21))
+
+    #p = packagetable.get(25)
+    #print(p.departure_time)
+    #print(p.delivery_time)
+    #print(p.get_time_status(timedelta(hours=8, minutes=55, seconds=21)))
 

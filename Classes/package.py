@@ -1,3 +1,6 @@
+from datetime import timedelta
+
+
 class package:
     # Initializes a package object
     def __init__(self, ID, address, city, state, zip_code, deadline, weight, status='At The Hub'):
@@ -9,7 +12,8 @@ class package:
         self.deadline = deadline
         self.weight = weight
         self.status = status
-        self.delivery_time = None
+        self.delivery_time = timedelta(hours=0)
+        self.departure_time = timedelta(hours=0)
 
     # Returns a string description of the package object
     def __str__(self):
@@ -28,3 +32,11 @@ class package:
     # Returns the current status of the package
     def get_status(self):
         return self.status
+    
+    def get_time_status(self, time):
+        if self.delivery_time < time:
+            return "Delivered"
+        elif self.delivery_time > time and self.departure_time < time:
+            return "In Transit"
+        else:
+            return "At The Hub"
