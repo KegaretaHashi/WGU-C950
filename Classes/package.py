@@ -37,6 +37,6 @@ class package:
         if self.delivery_time < time:
             return "Delivered"
         elif self.delivery_time > time and self.departure_time < time:
-            return "In Transit"
+            return "En Route"
         else:
             return "At The Hub"

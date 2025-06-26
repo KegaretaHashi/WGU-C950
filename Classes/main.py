@@ -50,10 +50,10 @@ def deliver_packages(truck_obj, start_time):
     # Set truck start time
     truck_obj.current_time = start_time
 
-    # Set status of all packages in the truck to 'In Transit'
+    # Set status of all packages in the truck to 'En Route'
     for package_id in truck_obj.get_packages():
             package = packagetable.get(package_id)
-            package.update_status('In Transit')
+            package.update_status('En Route')
             package.departure_time = truck_obj.current_time
 
     # Loop through packages in truck until all packages are delivered
@@ -66,7 +66,7 @@ def deliver_packages(truck_obj, start_time):
         # based on the trucks current location
         for package_id in truck_obj.get_packages():
             package = packagetable.get(package_id)
-            if package.status not in ('In Transit'):
+            if package.status not in ('En Route'):
                 continue
             package_address = translate_address(package.address)
             distance = get_distance(current_address, package_address)
@@ -96,8 +96,10 @@ def deliver_packages(truck_obj, start_time):
 def status_all_packages(time):
     for package_id in range(1, 41):
         package = packagetable.get(package_id)
-        if package:
+        if package.get_time_status(time) == "At The Hub" or package.get_time_status(time) == "En Route":
             print(f"Package {package.ID} status at {time}: {package.get_time_status(time)}")
+        elif package.get_time_status(time) == "Delivered":
+            print(f"Package {package.ID} delivered at {package.delivery_time}")
             
 
 # Create and load trucks with packages
@@ -155,5 +157,3 @@ class Main:
     # Catch-all for invalid input
     else:
         print("Invalid choice. Please enter 'all' or 'specific'.")
-
-
