@@ -96,16 +96,32 @@ def deliver_packages(truck_obj, start_time):
 def status_all_packages(time):
     for package_id in range(1, 41):
         package = packagetable.get(package_id)
-        if package.get_time_status(time) == "At The Hub" or package.get_time_status(time) == "En Route":
-            print(f"Package {package.ID} status at {time}: {package.get_time_status(time)}")
-        elif package.get_time_status(time) == "Delivered":
-            print(f"Package {package.ID} delivered at {package.delivery_time}")
-            
+        #print(f"Package ID: {package.ID}, Delivery Address: {package.address}, Delivery deadline: {package.deadline}, Truck number: {package.truck_id}, Delivery status at {time}: {package.get_time_status(time)}")
+        if package.get_time_status(time) == "Delivered":
+            print(f"Package ID: {package.ID}, Delivery Address: {package.address}, Delivery deadline: {package.deadline}, Truck number: {package.truck_id}, Delivery status at {time}: Delivered at {package.delivery_time}")
+        else:
+            print(f"Package ID: {package.ID}, Delivery Address: {package.address}, Delivery deadline: {package.deadline}, Truck number: {package.truck_id}, Delivery status at {time}: {package.get_time_status(time)}")
 
 # Create and load trucks with packages
 truck1 = truck.Truck(1, [14, 15, 19, 13, 16, 20, 1, 29, 30, 31, 34, 37, 40, 35, 39])
 truck2 = truck.Truck(2, [3, 18, 36, 38, 28, 32, 6, 25, 23, 24, 26, 27, 33])
 truck3 = truck.Truck(3, [9, 2, 4, 5, 7, 8, 10, 11, 12, 17 , 21, 22 ])
+
+# Update truck_id for all packages based on which truck they're assigned to
+trucks = [truck1, truck2, truck3]
+for truck_obj in trucks:
+    for package_id in truck_obj.get_packages():
+        package = packagetable.get(package_id)
+        if package:
+            package.truck_id = truck_obj.truck_id
+
+# Update delivery status of specific packages to "Delayed"
+delayed_packages = [6, 25, 28, 32]
+for package_id in delayed_packages:
+    package = packagetable.get(package_id)
+    if package:
+        package.update_status('Delayed')
+        #print(f"Package {package_id} status updated to 'Delayed'")
 
 class Main:
 
@@ -148,7 +164,11 @@ class Main:
         # If the package exists, prints its status at the given time
         # Otherwise, prints an error message
         if package:
-            print(f"Package {package.ID} status at {time}: {package.get_time_status(time)}")
+            #print(f"Package ID: {package.ID}, Delivery Address: {package.address}, Delivery deadline: {package.deadline}, Truck number: {package.truck_id}, Delivery status at {time}: {package.get_time_status(time)}")
+            if package.get_time_status(time) == "Delivered":
+                print(f"Package ID: {package.ID}, Delivery Address: {package.address}, Delivery deadline: {package.deadline}, Truck number: {package.truck_id}, Delivery status at {time}: Delivered at {package.delivery_time}")
+            else:
+                print(f"Package ID: {package.ID}, Delivery Address: {package.address}, Delivery deadline: {package.deadline}, Truck number: {package.truck_id}, Delivery status at {time}: {package.get_time_status(time)}")
         else:
             print(f"Package with ID {package_id} not found.")
     # If user input is exit, exits the program
